@@ -2,57 +2,75 @@ body
 {
 	margin: 0;	
 	background-color: #2E8B57;
-	color: #efefef;
+	color: #C0C0C0;
 	font-family: 'Arimo', sans-serif;	
 }
 
 h1
 {
-	text-align: center;
-	color: #C0C0C0;
-	font-size: 44px;
+	height: 54px;
+	text-align: center;	
+	font-size: 44px;	
 	letter-spacing: 5px;
-	margin-top: 50px;
-	margin-bottom: 50px;
-	background-color: black;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	padding: 2px;
+	/* Background pattern from subtlepatterns.com */
+	background-image: url("img/what-the-hex-dark.png");
+	text-shadow: 1px 1px 0 #FFD700;
+	border-top: 2px solid #FFD700;
+	border-bottom: 2px solid #FFD700;
 }
 
 #container
 {
-	width: 1400px;
+	width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 #about
 {
-	width: 490px;
-	font-size: 22px;	
-	margin-left: auto;
-	margin-right: auto;
+	width: 386px;
+	height: 591px;
+	font-size: 18px;	
 	color: #2E8B57;
-	float: left;
-	background-color: black;
+	float: left;	
 	padding-left: 5px;
-	padding-right: 5px;	
-	text-align: justify;
-}
-
-#photo
-{
-	float: left;
-	margin-bottom: 10px;
+	padding-right: 5px;
+	padding-top: 5px;
+	text-align: center;	
+	background-image: url("img/what-the-hex-dark.png");
+	border-left: 2px solid #C0C0C0;
+	border-right: 2px solid #C0C0C0;
+	border-top: 2px solid #FFD700;
+	border-bottom: 2px solid #FFD700;
 }
 
 #nav
 {
-	width: 500px;	
+	width: 398px;
+	height: 146px;	
 	font-size: 26px;
+	font-weight: 700;
 	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
+	letter-spacing: 1px;
+	margin-top: 50px;
+	padding-top: 25px;
+	padding-bottom: 25px;	
+	float: left;	
+	background-image: url("img/what-the-hex-dark.png");
+	border-top: 2px solid #FFD700;
+	border-bottom: 2px solid #FFD700;	
+	border-right: 2px solid #C0C0C0;
+}
+
+#photo
+{
+	width: 400px;
+	height: 600px;	
 	float: left;
-	background-color: black;
+	margin-bottom: 8px;	
 }
 
 a:link
@@ -79,11 +97,15 @@ a:active
 	text-decoration: none;
 }
 
-.info
+#info
 {	
 	clear: both;
+	font-size: 16px;
 	margin-left: auto;
-	margin-right: auto;		
+	margin-right: auto;
+	margin-bottom: 8px;
 	text-align: center;
-	padding: 20px;		
+	padding: 4px;
+	letter-spacing: 2px;
+	background-image: url("img/what-the-hex-dark.png");	
 }
