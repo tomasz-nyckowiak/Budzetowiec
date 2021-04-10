@@ -101,7 +101,7 @@ a:hover
 
 a:active
 {
-	color:#C0C0C0;
+	color: #C0C0C0;
 	text-decoration: none;
 }
 
@@ -122,7 +122,7 @@ a:active
 	background-image: url("img/what-the-hex-dark.png");	
 }
 
-#registration
+.inputs
 {
 	width: 400px;
 	font-size: 20px;
@@ -194,6 +194,42 @@ input[type=submit]:hover
 {
 	background-color: #40bf77;
 	color: black;
+}
+
+input::-webkit-input-placeholder
+{
+    color: #999;
+}
+input:focus::-webkit-input-placeholder
+{
+    color: black;
+}
+/* Firefox < 19 */
+input:-moz-placeholder
+{
+    color: #999;
+}
+input:focus:-moz-placeholder
+{
+    color: black;
+}
+/* Firefox > 19 */
+input::-moz-placeholder
+{   
+	color: #999;
+}
+input:focus::-moz-placeholder
+{
+    color: black;
+}
+/* Internet Explorer 10 */
+input:-ms-input-placeholder
+{
+    color: #999;
+}
+input:focus:-ms-input-placeholder
+{
+    color: black;
 }
 
 
