@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Aplikacja internetowa do prowadzenia budżetu domowego</title>
+	<meta name="description" content="Moja pierwsza aplikacja internetowa" />
+	<meta name="keywords" content="prowadzenie budżetu, domowy budżet, budżet, jak oszczędzać, oszczędzanie, finanse, kontrola wydatków, przychody, wydatki, bilans, bilans finansowy" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<link rel="stylesheet" href="css/fontello.css" type="text/css" />
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">	
+	
+</head>
+
+<body>
+
+	<header>
+		<h1>BUDŻETOWIEC</h1>
+	</header>
+	
+	<main>
+		
+		<nav>
+			<div class="nav">
+					<ol>
+						<li><a href="#">Dodaj przychód</a></li>
+						<li><a href="#" class="onSite">Dodaj wydatek</a></li>
+						<li><a href="#">Przeglądaj bilans</a></li>
+						<li><a href="#">Ustawienia</a></li>
+						<li><a href="#">Wyloguj</a></li>
+					</ol>
+			</div>
+		</nav>
+		
+		<article>
+		
+			<div class="form">				
+				
+				<form action="addExpense.php" method="post" enctype="multipart/form-data">
+									
+					<div class="row"><label> Kwota: <input type="number" name="wydatek" required></label></div>				
+					
+					<div class="row"><label> Data: <input type="date" name="data" required></label></div>
+										
+					<div class="row">
+						<label for="płatność"> Sposób płatności: </label>
+						<select id="płatność" name="płatność">
+						
+							<option value="g">gotówka</option>
+							<option value="d">karta debetowa</option>
+							<option value="k" selected>karta kredytowa</option>						
+						
+						</select>
+					</div>
+					
+					<div class="row">
+						<fieldset>
+						
+							<legend> Kategoria </legend>
+					
+							<label><input type="radio" value="1" name="kategoria"> Jedzenie </label>
+							<label><input type="radio" value="2" name="kategoria"> Mieszkanie </label>
+							<label><input type="radio" value="3" name="kategoria"> Transport </label>
+							<label><input type="radio" value="4" name="kategoria"> Telekomunikacja </label>
+							<label><input type="radio" value="5" name="kategoria"> Opieka zdrowotna </label>
+							<label><input type="radio" value="6" name="kategoria"> Ubranie </label>
+							<label><input type="radio" value="7" name="kategoria"> Higiena </label>
+							<label><input type="radio" value="8" name="kategoria"> Dzieci </label>
+							
+							<div class="row">
+								<label><input type="radio" value="9" name="kategoria"> Rozrywka </label>
+								<label><input type="radio" value="10" name="kategoria"> Wycieczka </label>
+								<label><input type="radio" value="11" name="kategoria"> Szkolenia </label>
+								<label><input type="radio" value="12" name="kategoria"> Książki </label>
+								<label><input type="radio" value="13" name="kategoria"> Oszczędności </label>
+								<label><input type="radio" value="14" name="kategoria"> Na emeryturę </label>
+								<label><input type="radio" value="15" name="kategoria"> Spłata długów </label>
+								<label><input type="radio" value="16" name="kategoria"> Darowizna </label>
+								
+								<div class="row">
+									<label><input type="radio" value="17" name="kategoria"> Inne wydatki </label>
+								</div>
+								
+							</div>							
+					
+						</fieldset>
+					</div>
+					
+					<div class="row">
+						<div><label for="comment"> Komentarz (opcjonalnie): </label></div>
+						<textarea name="comment" id="comment" rows="4" cols="80" minlength="10"></textarea>
+					</div>
+					
+					<div class="row">						
+						<input type="submit" name="submits" value="Dodaj wydatek!">
+						<input type="reset" value="Wyczyść">						
+					</div>					
+				
+				</form>
+				
+			</div>
+		
+		</article>
+		
+	</main>
+	
+	<footer>	
+		<div id="info">
+			Wszelkie prawa zastrzeżone &copy; 2021 | <i class="icon-mail"></i> tomasz.nyckowiak.programista@gmail.com
+		</div>		
+	</footer>
+
+</body>
+</html>
