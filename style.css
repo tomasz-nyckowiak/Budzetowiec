@@ -28,6 +28,7 @@ body
 	width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 30px;
 }
 
 #about
@@ -98,22 +99,7 @@ a:active
 	text-decoration: none;
 }
 
-#info
-{	
-	width: 100%;
-	clear: both;
-	font-size: 16px;
-	margin-left: auto;
-	margin-right: auto;
-	/*margin-bottom: 8px;*/
-	text-align: center;	
-	letter-spacing: 2px;
-	position: absolute;
-	bottom: 8px;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	background-image: url("img/what-the-hex-dark.png");	
-}
+			/*STYLES FOR "REJESTRACJA I LOGOWANIE"*/
 
 .inputs
 {
@@ -225,6 +211,28 @@ input:focus:-ms-input-placeholder
     color: black;
 }
 
+			/*STYLES FOR "MENU GŁÓWNE"*/
+
+.page-container
+{
+	width: 100%;	
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+main
+{
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+	flex: 1;
+}
+
+			/*STYLES FOR "DODAJ WYDATEK"*/
+
 .nav
 {	
 	font-size: 20px;
@@ -260,7 +268,7 @@ ol > li:first-child
 
 .form
 {
-	width: 75%;
+	width: 100%;
 	color: #C0C0C0;
 	font-size: 18px;
 	margin-left: auto;
@@ -298,18 +306,12 @@ input[name="submits"]
 
 input[type=reset]
 {	
+	
 	cursor: pointer;	
 	margin-left: 60%;	
 }
 
 			/*STYLES FOR "PRZEGLĄDAJ BILANS"*/
-
-.container
-{
-	width: 75%;	
-	margin-left: auto;
-	margin-right: auto;
-}
 
 .choosingRange
 {
@@ -549,12 +551,14 @@ ul.money > li:last-child
 	background-image: url("img/what-the-hex-dark.png");
 }
 
+					/*STOPKA*/
+
 .footer
-{	
+{
 	font-size: 16px;	
 	text-align: center;
+	letter-spacing: 2px;
 	margin-top: 30px;
 	margin-bottom: 10px;
-	padding: 2px;
 	background-image: url("img/what-the-hex-dark.png");
 }
