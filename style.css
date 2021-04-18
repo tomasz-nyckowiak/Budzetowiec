@@ -1,33 +1,26 @@
-html
-{
-	height: 100%;
-}
-
 body
-{
-	width: 100%;
-	margin: 0;	
+{	
 	background-color: #2E8B57;
 	color: #C0C0C0;
 	font-family: 'Arimo', sans-serif;
-	min-height: 100%;
-	position: relative;
+	font-size: 18px;
+	margin: 0;
 }
 
-h1
-{
+.header
+{	
 	height: 54px;
 	text-align: center;	
-	font-size: 44px;	
+	font-size: 44px;
+	font-weight: 700;
 	letter-spacing: 5px;
-	margin-top: 8px;
-	margin-bottom: 8px;
-	padding: 2px;
-	/* Background pattern from subtlepatterns.com */
-	background-image: url("img/what-the-hex-dark.png");
+	margin-top: 10px;	
+	padding: 2px;	
 	text-shadow: 1px 1px 0 #FFD700;
 	border-top: 2px solid #FFD700;
 	border-bottom: 2px solid #FFD700;
+	/* Background pattern from subtlepatterns.com */
+	background-image: url("img/what-the-hex-dark.png");
 }
 
 #container
@@ -233,18 +226,15 @@ input:focus:-ms-input-placeholder
 }
 
 .nav
-{
-	width: 75%;	
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 30px;
+{	
+	font-size: 20px;
+	text-align: center;	
+	margin-top: 30px;	
 	background-image: url("img/what-the-hex-dark.png");	
 }
 
 ol
-{
-	font-size: 20px;
+{	
 	height: 50px;
 	padding: 0;
 	margin: 0;
@@ -312,5 +302,259 @@ input[type=reset]
 	margin-left: 60%;	
 }
 
+			/*STYLES FOR "PRZEGLĄDAJ BILANS"*/
 
+.container
+{
+	width: 75%;	
+	margin-left: auto;
+	margin-right: auto;
+}
 
+.choosingRange
+{
+	width: 225px;	
+	margin-top: 30px;	
+	text-align: center;
+	padding: 5px;
+	letter-spacing: 1px;
+	border-radius: 5px;
+	float: right;
+	background-image: url("img/what-the-hex-dark.png");	
+}
+
+.choosingRange > ul
+{
+	display: none;
+}
+
+.choosingRange:hover > ul
+{
+	width: 215px;
+	display: block;
+	text-align: center;
+	padding: 5px;
+	margin: 0;	
+	list-style-type: none;
+	position: absolute;
+	z-index: 100;
+}
+
+.choosingRange:hover > ul > li
+{	
+	position: relative;	
+	z-index: 100;
+	border-top: 1px dashed #C0C0C0;
+	padding: 5px 0;
+	background-image: url("img/what-the-hex-dark.png");
+}
+
+.choosingRange > ul > li:hover > a
+{
+	text-decoration: none;
+}
+
+.choosingRange:hover > a
+{
+	color: #FFD700;
+	text-decoration: none;
+}
+
+#currentMonth
+{
+	width: 496px;
+	height: 71px;
+	margin-top: 150px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding: 2px;	
+	display: none;
+	background-image: url("img/what-the-hex-dark.png");
+}
+
+#previousMonth
+{
+	width: 496px;
+	height: 71px;
+	margin-top: 150px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding: 2px;	
+	display: none;
+	background-image: url("img/what-the-hex-dark.png");
+}
+
+#currentYear
+{
+	width: 496px;
+	height: 71px;
+	margin-top: 150px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding: 2px;	
+	display: none;
+	background-image: url("img/what-the-hex-dark.png");
+}
+
+#customizedRange
+{
+	width: 500px;
+	height: 100px;
+	margin-top: 150px;
+	margin-left: auto;
+	margin-right: auto;	
+	text-align: center;
+	padding: 10px 0;	
+	display: none;
+	background-image: url("img/what-the-hex-dark.png");
+}
+
+input[name="date1"],
+input[name="date2"]
+{
+	width: 130px;		
+}
+
+.tab
+{	
+	width: 328px;	
+	margin-top: 150px;
+	margin-left: 50px;	
+	border-left: 1px solid #C0C0C0;
+	border-right: 1px solid #C0C0C0;
+	border-top: 1px solid #FFD700;
+	border-bottom: 1px solid #FFD700;
+	float: left;
+	background-image: url("img/what-the-hex-dark.png");
+}
+
+h2
+{	
+	height: 30px;
+	color: #2E8B57;
+	text-align: center;
+	padding: 2px;
+	margin-bottom: 2px;
+	margin-top: 8px;
+	letter-spacing: 2px;	
+	background-image: url("img/what-the-hex-dark.png");	
+	border-bottom: 2px dashed #C0C0C0;
+}
+
+ul.incomes
+{	
+	float: left;	
+	list-style-type: none;
+	padding: 10px 5px;
+	text-align: right;
+	margin-left: 25px;
+	margin-top: 5px;
+	font-size: 18px;	
+}
+
+ul.incomes > li:last-child
+{
+	margin-top: 15px;	
+}
+	
+ul.category
+{	
+	float: left;	
+	list-style-type: square;
+	padding: 10px 5px;
+	text-align: right;
+	margin-left: 25px;
+	margin-top: 5px;
+	font-size: 18px;	
+}
+
+ul.category > li:nth-child(3)
+{
+	color: yellow;
+}
+
+ul.category > li:nth-child(6)
+{
+	color: purple;
+}
+
+ul.category > li:nth-child(7)
+{
+	color: #47d1d1;
+}
+
+ul.category > li:nth-child(13)
+{
+	color: #d9b38c;
+}
+
+ul.category > li:last-child
+{
+	margin-top: 15px;
+	list-style-type: none;
+}
+
+ul.money
+{
+	float: left;
+	list-style-type: none;
+	padding: 10px 0;
+	margin-top: 5px;	
+	font-size: 18px;		
+}
+
+ul.money > li:last-child
+{
+	margin-top: 15px;
+}
+
+.tab > p
+{
+	font-size: 18px;
+	text-align: center;	
+}
+
+.chart
+{	
+	background: conic-gradient(
+	yellow 0deg, yellow 68deg, 
+    purple 68deg, purple 183deg, 
+    #47d1d1 183deg, #47d1d1 215deg,
+    #d9b38c 215deg, #d9b38c 360deg);
+	border-radius: 50%;
+	float: left;
+	width: 300px;
+	height: 300px;	
+	margin-top: 150px;
+	margin-left: 50px;
+	margin-right: auto;	
+}
+
+.balance
+{	
+	width: 400px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	margin-bottom: 10px;
+	padding-bottom: 2px;
+	border-left: 2px solid #FFD700;
+	border-right: 2px solid #FFD700;
+	border-top: 2px solid #FFD700;
+	border-bottom: 2px solid #FFD700;
+	background-image: url("img/what-the-hex-dark.png");
+}
+
+.footer
+{	
+	font-size: 16px;	
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	padding: 2px;
+	background-image: url("img/what-the-hex-dark.png");
+}
