@@ -65,73 +65,77 @@
 		
 			<div class="row mt-5 form">
 			
-				<div class="row my-1 p-2">
-				
-					<div class="col-auto">
-						<label for="inputAmount" class="col-form-label">Kwota:</label>
+				<form>
+					
+					<div class="row my-1 p-2">
+					
+						<div class="col-auto">
+							<label for="inputAmount" class="col-form-label">Kwota:</label>
+						</div>
+					
+						<div class="col-auto">
+							<input type="number" id="inputAmount" class="form-control" required>
+						</div>
+					
 					</div>
-				
-					<div class="col-auto">
-						<input type="number" id="inputAmount" class="form-control">
+					
+					<div class="row my-1 p-2">
+					
+						<div class="col-auto">
+							<label for="inputDate" class="col-form-label">Data:</label>
+						</div>
+					
+						<div class="col-auto">
+							<input type="date" id="inputDate" class="form-control" required>
+						</div>
+					
 					</div>
-				
-				</div>
-				
-				<div class="row my-1 p-2">
-				
-					<div class="col-auto">
-						<label for="inputDate" class="col-form-label">Data:</label>
+					
+					<fieldset class="row my-1 p-2">				
+						<legend class="col-form-label">Kategoria:</legend>
+						<div class="col-auto">
+						  <div class="form-check">
+							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+							<label class="form-check-label" for="gridRadios1">Wynagrodzenie</label>
+						  </div>
+						  <div class="form-check">
+							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+							<label class="form-check-label" for="gridRadios2">Odsetki bankowe</label>
+						  </div>
+						  <div class="form-check">
+							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+							<label class="form-check-label" for="gridRadios3">Sprzedaż na allegro</label>
+						  </div>
+						  <div class="form-check">
+							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value="option4">
+							<label class="form-check-label" for="gridRadios4">Inne</label>
+						  </div>
+						</div>
+					</fieldset>
+					
+					<div class="row my-1 p-2">
+					
+						<div class="col-auto">
+							<label for="CommentForIncome" class="col-form-label">Komentarz (opcjonalnie):</label>
+							<textarea class="form-control" id="CommentForIncome" rows="3" cols="60" minlength="10"></textarea>
+						</div>			
+					
 					</div>
-				
-					<div class="col-auto">
-						<input type="date" id="inputDate" class="form-control">
+					
+					<div class="row my-1 p-2">								
+						<div class="d-flex justify-content-start">						
+							<input type="submit" value="Dodaj przychód">
+						</div>						
 					</div>
-				
-				</div>
-				
-				<fieldset class="row my-1 p-2">				
-					<legend class="col-form-label">Kategoria:</legend>
-					<div class="col-auto">
-					  <div class="form-check">
-						<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-						<label class="form-check-label" for="gridRadios1">Wynagrodzenie</label>
-					  </div>
-					  <div class="form-check">
-						<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-						<label class="form-check-label" for="gridRadios2">Odsetki bankowe</label>
-					  </div>
-					  <div class="form-check">
-						<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
-						<label class="form-check-label" for="gridRadios3">Sprzedaż na allegro</label>
-					  </div>
-					  <div class="form-check">
-						<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value="option4">
-						<label class="form-check-label" for="gridRadios4">Inne</label>
-					  </div>
+					
+					<div class="row my-1 p-2">				
+						<div class="d-flex justify-content-end">
+							<button type="button" name="cancel" class="btn btn-outline-secondary">Anuluj</button>
+						</div>				
 					</div>
-				</fieldset>
+					
+				</form>
 				
-				<div class="row my-1 p-2">
-				
-					<div class="col-auto">
-						<label for="CommentForIncome" class="col-form-label">Komentarz (opcjonalnie):</label>
-						<textarea class="form-control" id="CommentForIncome" rows="3" cols="60" minlength="10"></textarea>
-					</div>			
-				
-				</div>
-				
-				<div class="row my-1 p-2">								
-					<div class="d-flex justify-content-start">						
-						<input type="submit" name="submits" value="Dodaj przychód">
-					</div>						
-				</div>
-				
-				<div class="row my-1 p-2">				
-					<div class="d-flex justify-content-end">
-						<button type="button" name="cancel" class="btn btn-outline-secondary">Anuluj</button>
-					</div>				
-				</div>
-			
 			</div>		
 		
 		</div>		

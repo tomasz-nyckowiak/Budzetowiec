@@ -89,3 +89,8 @@ function showC()
 		c.style.display = "none";
 	}	
 }
+
+function resetFunction()
+{
+	document.getElementById("modalForm").reset();
+}
