@@ -1,3 +1,9 @@
+<?php
+
+	session_start();
+
+?>
+
 <!DOCTYPE HTML>
 <html lang="pl">
 
@@ -37,15 +43,21 @@
 			
 				<div class="col-auto">
 
-					<form class="inputs p-5">						
+					<form action="zaloguj.php" method="post" class="inputs p-5">						
 						<div class="mb-3">							
-							<input type="email" class="form-control" placeholder="e-mail" onfocus="this.placeholder=''" onblur="this.placeholder='e-mail'" required>							
+							<input type="email" name="login" class="form-control" placeholder="e-mail" onfocus="this.placeholder=''" onblur="this.placeholder='e-mail'" required>							
 						 </div>
 						 <div class="mb-3">							
-							<input type="password" class="form-control" placeholder="hasło" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" required>							
-						 </div>
+							<input type="password" name="haslo" class="form-control" placeholder="hasło" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" required>							
+						 </div>						
 						<button type="submit" class="btn customButton mt-5 p-3">Zaloguj się</button>						
-					</form>					
+					</form>
+
+					<?php
+						
+						if (isset($_SESSION['blad'])) echo $_SESSION['blad'];
+					
+					?>
 				
 				</div>
 			

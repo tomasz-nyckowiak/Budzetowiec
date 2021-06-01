@@ -1,3 +1,15 @@
+<?php
+
+	session_start();
+	
+	if ((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
+	{
+		header('Location: menuglowne.php');
+		exit();
+	}
+
+?>
+
 <!DOCTYPE HTML>
 <html lang="pl">
 
@@ -46,8 +58,8 @@
 
 				<div class="d-flex justify-content-center p-5 mainNav">				
 					<div class="col-auto p-1">
-						<p><a href="rejestracja.html" title="Załóż konto!">Rejestracja</a></p>				
-						<p><a href="logowanie.html" title="Zaloguj się!">Logowanie</a></p>
+						<p><a href="rejestracja.php" title="Załóż konto!">Rejestracja</a></p>				
+						<p><a href="logowanie.php" title="Zaloguj się!">Logowanie</a></p>
 					</div>	
 				</div>	
 

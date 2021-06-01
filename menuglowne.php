@@ -1,3 +1,15 @@
+<?php
+
+	session_start();
+	
+	if (!isset($_SESSION['zalogowany']))
+	{
+		header('Location: index.php');
+		exit();
+	}
+	
+?>
+
 <!DOCTYPE HTML>
 <html lang="pl">
 
@@ -37,19 +49,19 @@
 			
 				<ol class="navbar-nav text-sm-center mx-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="dodajprzychod.html"> Dodaj przychód </a>
+						<a class="nav-link" href="dodajprzychod.php"> Dodaj przychód </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="dodajwydatek.html"> Dodaj wydatek </a>
+						<a class="nav-link" href="dodajwydatek.php"> Dodaj wydatek </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="przegladajbilans.html"> Przeglądaj bilans </a>
+						<a class="nav-link" href="przegladajbilans.php"> Przeglądaj bilans </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="ustawienia.html"> Ustawienia </a>
+						<a class="nav-link" href="ustawienia.php"> Ustawienia </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="index.html"> Wyloguj </a>
+						<a class="nav-link" href="logout.php"> Wyloguj </a>
 					</li>
 				</ol>
 			
@@ -62,7 +74,7 @@
 	<main>	
 		<div class="row">
 			<div class="col-auto">
-				<p class="greetings p-2">Witaj "imię użytkownika"!</p>
+				<p class="greetings p-2"><?php echo "Witaj ".$_SESSION['imie']."!"?></p>
 			</div>		
 		</div>	
 	</main>
