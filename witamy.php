@@ -2,11 +2,29 @@
 
 	session_start();
 	
-	if ((isset($_SESSION['zalogowany'])) && ($_SESSION['zalogowany']==true))
+	if (!isset($_SESSION['udanarejestracja']))
 	{
-		header('Location: menuglowne.php');
+		header('Location: index.php');
 		exit();
 	}
+	else
+	{
+		unset($_SESSION['udanarejestracja']);
+	}
+	
+	//Usuwanie zmiennych pamiętających wartości wpisane do formularza
+	if (isset($_SESSION['fr_imie'])) unset($_SESSION['fr_imie']);
+	if (isset($_SESSION['fr_email'])) unset($_SESSION['fr_email']);
+	if (isset($_SESSION['fr_haslo1'])) unset($_SESSION['fr_haslo1']);
+	if (isset($_SESSION['fr_haslo2'])) unset($_SESSION['fr_haslo2']);
+	if (isset($_SESSION['fr_regulamin'])) unset($_SESSION['fr_regulamin']);
+	
+	//Usuwanie błędów rejestracji
+	if (isset($_SESSION['e_imie'])) unset($_SESSION['e_imie']);
+	if (isset($_SESSION['e_email'])) unset($_SESSION['e_email']);
+	if (isset($_SESSION['e_haslo'])) unset($_SESSION['e_haslo']);
+	if (isset($_SESSION['e_regulamin'])) unset($_SESSION['e_regulamin']);
+	if (isset($_SESSION['e_bot'])) unset($_SESSION['e_bot']);
 
 ?>
 
@@ -41,36 +59,17 @@
 	
 	</header>
 
-	<main>
+	<main>		
 		
-		<div class="container">
+		<div class="container my-4">
 		
-			<div class="row d-flex justify-content-center">
-			
-				<div class="col-auto">
-
-					<form action="zaloguj.php" method="post" class="inputs p-5">						
-						
-						<div class="mb-3">							
-							<input type="email" name="login" class="form-control" placeholder="e-mail" onfocus="this.placeholder=''" onblur="this.placeholder='e-mail'" required>							
-						</div>
-						
-						<div class="mb-3">							
-							<input type="password" name="haslo" class="form-control" placeholder="hasło" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" required>							
-							 <?php						
-								if (isset($_SESSION['blad'])) echo $_SESSION['blad'];				
-							 ?>
-						</div>						
-						
-						<button type="submit" class="btn customButton mt-5 p-3">Zaloguj się</button>						
-					</form>					
-				
-				</div>
-			
+			<div class="greetings p-2">
+				<p style="text-align: center;">Dziękujemy za rejestrację w serwisie! Możesz już się zalogować na swoje konto!<br /><br />
+				<a href="logowanie.php">Zaloguj się na swoje konto!</a></p>
 			</div>
 		
 		</div>
-
+		
 	</main>
 	
 	<footer class="fixed-bottom">

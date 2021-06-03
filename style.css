@@ -501,3 +501,10 @@ ul > li:last-child
 		border-left: 1px dashed #C0C0C0;
 	}	
 }
+
+.error
+{
+	color: red !important;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}

@@ -9,48 +9,67 @@
 	}
 	
 	require_once "connect.php";
+	mysqli_report(MYSQLI_REPORT_STRICT);
 	
-	$polaczenie = @new mysqli($host, $db_user, $db_password, $db_name);
-	
-	if ($polaczenie->connect_errno!=0)
+	try
 	{
-		echo "Error: ".$polaczenie->connect_errno;
-	}
-	else
-	{	
-		$login = $_POST['login'];
-		$haslo = $_POST['haslo'];
+		$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
 		
-		$login = htmlentities($login, ENT_QUOTES, "UTF-8");
-		$haslo = htmlentities($haslo, ENT_QUOTES, "UTF-8");
-	
-		if ($rezultat = @$polaczenie->query(
-		sprintf("SELECT * FROM uzytkownicy WHERE email='%s' AND haslo='%s'",
-		mysqli_real_escape_string($polaczenie,$login),
-		mysqli_real_escape_string($polaczenie,$haslo))))
+		if ($polaczenie->connect_errno!=0)
 		{
-			$ilu_userow = $rezultat->num_rows;
-			if($ilu_userow>0)
-			{
-				$_SESSION['zalogowany'] = true;
-				
-				$wiersz = $rezultat->fetch_assoc();
-				$_SESSION['id'] = $wiersz['id'];
-				$_SESSION['imie'] = $wiersz['imie'];				
-				$_SESSION['email'] = $wiersz['email'];				
-				
-				unset($_SESSION['blad']);
-				$rezultat->free_result();
-				header('Location: menuglowne.php');
-				
-			} else {
-				
-				$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';
-				header('Location: logowanie.php');
-			}
+			throw new Exception(mysqli_connect_errno());
 		}
+		else
+		{	
+			$login = $_POST['login'];
+			$haslo = $_POST['haslo'];
+			
+			$login = htmlentities($login, ENT_QUOTES, "UTF-8");		
 		
-		$polaczenie->close();
-	}		
+			if ($rezultat = $polaczenie->query(
+			sprintf("SELECT * FROM uzytkownicy WHERE email='%s'",
+			mysqli_real_escape_string($polaczenie,$login))))
+			{
+				$ilu_userow = $rezultat->num_rows;
+				if ($ilu_userow>0)
+				{
+					$wiersz = $rezultat->fetch_assoc();
+					
+					if (password_verify($haslo, $wiersz['haslo']))
+					{					
+						$_SESSION['zalogowany'] = true;					
+						$_SESSION['id'] = $wiersz['id'];
+						$_SESSION['imie'] = $wiersz['imie'];				
+						$_SESSION['email'] = $wiersz['email'];				
+						
+						unset($_SESSION['blad']);
+						$rezultat->free_result();
+						header('Location: menuglowne.php');				
+					}
+					else
+					{					
+						$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';						
+						header('Location: logowanie.php');
+					}
+					
+				} else {
+					
+					$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';
+					header('Location: logowanie.php');
+				}
+			}
+			else
+			{
+				throw new Exception($polaczenie->error);
+			}
+			
+			$polaczenie->close();
+		}
+	}
+	catch(Exception $e)
+	{
+		echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o wizytę w innym terminie!</span>';
+		echo '<br />Informacja developerska: '.$e;
+	}
 
 ?>
