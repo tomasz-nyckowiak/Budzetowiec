@@ -8,6 +8,35 @@
 		exit();
 	}
 	
+	require_once "connect.php";
+	mysqli_report(MYSQLI_REPORT_STRICT);
+	
+	try
+	{
+		$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+		
+		if ($polaczenie->connect_errno!=0)
+		{
+			throw new Exception(mysqli_connect_errno());
+		}
+		else
+		{			
+			$moje_kategorie = $polaczenie->query("SELECT kategoria FROM przychody_kategorie_przypisane_do_uzytkownika");
+			$tablica = array();
+			while ($row = $moje_kategorie->fetch_assoc()) {
+			$temp = $row['kategoria'];				
+			array_push($tablica, "$temp");
+			}					
+			
+			$polaczenie->close();
+		}
+	}
+	catch(Exception $e)
+	{
+		echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o wizytę w innym terminie!</span>';
+		echo '<br />Informacja developerska: '.$e;
+	}	
+	
 ?>
 
 <!DOCTYPE HTML>
@@ -49,19 +78,19 @@
 			
 				<ol class="navbar-nav text-sm-center mx-auto">
 					<li class="nav-item">
-						<a class="nav-link onSite" href="dodajprzychod.html"> Dodaj przychód </a>
+						<a class="nav-link onSite" href="dodajprzychod.php"> Dodaj przychód </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="dodajwydatek.html"> Dodaj wydatek </a>
+						<a class="nav-link" href="dodajwydatek.php"> Dodaj wydatek </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="przegladajbilans.html"> Przeglądaj bilans </a>
+						<a class="nav-link" href="przegladajbilans.php"> Przeglądaj bilans </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="ustawienia.html"> Ustawienia </a>
+						<a class="nav-link" href="ustawienia.php"> Ustawienia </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="index.html"> Wyloguj </a>
+						<a class="nav-link" href="logout.php"> Wyloguj </a>
 					</li>
 				</ol>
 			
@@ -77,7 +106,7 @@
 		
 			<div class="row mt-5 form">
 			
-				<form>
+				<form action="dodanonowyprzychod.php" method="post">
 					
 					<div class="row my-1 p-2">
 					
@@ -86,7 +115,7 @@
 						</div>
 					
 						<div class="col-auto">
-							<input type="number" id="inputAmount" class="form-control" required>
+							<input type="number" step="0.01" name="kwotaPrzychodu" id="inputAmount" class="form-control" required>
 						</div>
 					
 					</div>
@@ -98,7 +127,7 @@
 						</div>
 					
 						<div class="col-auto">
-							<input type="date" id="inputDate" class="form-control" required>
+							<input type="date" name="dataPrzychodu" value="<?php echo date('Y-m-d');?>" id="inputDate" class="form-control" required>
 						</div>
 					
 					</div>
@@ -107,20 +136,20 @@
 						<legend class="col-form-label">Kategoria:</legend>
 						<div class="col-auto">
 						  <div class="form-check">
-							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-							<label class="form-check-label" for="gridRadios1">Wynagrodzenie</label>
+							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="<?php echo "$tablica[0]";?>" checked>
+							<label class="form-check-label" for="gridRadios1"><?php echo "$tablica[0]";?></label>
 						  </div>
 						  <div class="form-check">
-							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-							<label class="form-check-label" for="gridRadios2">Odsetki bankowe</label>
+							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="<?php echo "$tablica[1]";?>">
+							<label class="form-check-label" for="gridRadios2"><?php echo "$tablica[1]";?></label>
 						  </div>
 						  <div class="form-check">
-							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
-							<label class="form-check-label" for="gridRadios3">Sprzedaż na allegro</label>
+							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="<?php echo "$tablica[2]";?>">
+							<label class="form-check-label" for="gridRadios3"><?php echo "$tablica[2]";?></label>
 						  </div>
 						  <div class="form-check">
-							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value="option4">
-							<label class="form-check-label" for="gridRadios4">Inne</label>
+							<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value="<?php echo "$tablica[3]";?>">
+							<label class="form-check-label" for="gridRadios4"><?php echo "$tablica[3]";?></label>
 						  </div>
 						</div>
 					</fieldset>
@@ -129,7 +158,7 @@
 					
 						<div class="col-auto">
 							<label for="CommentForIncome" class="col-form-label">Komentarz (opcjonalnie):</label>
-							<textarea class="form-control" id="CommentForIncome" rows="3" cols="60" minlength="10"></textarea>
+							<textarea class="form-control" name="komentarzDoPrzychodu" id="CommentForIncome" rows="3" cols="60" minlength="10"></textarea>
 						</div>			
 					
 					</div>

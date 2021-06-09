@@ -103,7 +103,20 @@
 					if ($polaczenie->query("INSERT INTO uzytkownicy VALUES (NULL, '$imie', '$haslo_hash', '$email')"))
 					{
 						$_SESSION['udanarejestracja'] = true;
-						header('Location: witamy.php');
+						
+						//Po udanej rejestracji kopiujemy domyślne kategorie z tabeli przychody_kategorie_domyslne do tabeli przychody_kategorie_przypisane_do_uzytkownika
+						
+						//Pobieramy ID zalogowanego użytkownika
+						$ID_uzytkownika = $polaczenie->query("SELECT id FROM uzytkownicy ORDER BY id DESC LIMIT 1")->fetch_object()->id;
+						
+						if ($polaczenie->query("INSERT INTO przychody_kategorie_przypisane_do_uzytkownika (ID_uzytkownika, kategoria) SELECT uzytkownicy.id, przychody_kategorie_domyslne.kategoria FROM uzytkownicy, przychody_kategorie_domyslne WHERE uzytkownicy.id = '$ID_uzytkownika'"))
+						{
+							header('Location: witamy.php');								
+						}
+						else
+						{
+							throw new Exception($polaczenie->error);
+						}						
 					}
 					else
 					{

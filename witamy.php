@@ -9,7 +9,7 @@
 	}
 	else
 	{
-		unset($_SESSION['udanarejestracja']);
+		unset($_SESSION['udanarejestracja']);		
 	}
 	
 	//Usuwanie zmiennych pamiętających wartości wpisane do formularza

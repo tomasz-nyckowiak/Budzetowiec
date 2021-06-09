@@ -8,6 +8,73 @@
 		exit();
 	}
 	
+	if (isset($_POST['kwotaPrzychodu']))
+	{
+		$ID_uzytkownika = $_SESSION['id'];
+		$kwota = $_POST['kwotaPrzychodu'];
+		$data = $_POST['dataPrzychodu'];
+		$wybrana_kategoria = $_POST['gridRadios'];
+		
+		if (isset($_POST['komentarzDoPrzychodu']))
+		{
+			$komentarz = $_POST['komentarzDoPrzychodu'];
+			$istnieje_komentarz = true;
+		}
+		else
+		{
+			$istnieje_komentarz = false;
+		}
+		
+		require_once "connect.php";
+		mysqli_report(MYSQLI_REPORT_STRICT);
+		
+		try
+		{
+			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+			
+			if ($polaczenie->connect_errno!=0)
+			{
+				throw new Exception(mysqli_connect_errno());
+			}
+			else
+			{				
+				$id_kategorii = $polaczenie->query("SELECT id FROM przychody_kategorie_przypisane_do_uzytkownika WHERE ID_uzytkownika = '$ID_uzytkownika' AND kategoria = '$wybrana_kategoria'")->fetch_object()->id;
+				
+				if ($istnieje_komentarz == true)
+				{
+					if ($polaczenie->query("INSERT INTO przychody (ID_uzytkownika, kwota, data, kategoria_przypisana_do_danego_uzytkownika, komentarz) VALUES ('$ID_uzytkownika', '$kwota', '$data', '$id_kategorii', '$komentarz')"))
+					{
+						;								
+					}
+					else
+					{
+						throw new Exception($polaczenie->error);
+					}
+				}
+				else
+				{
+					if ($polaczenie->query("INSERT INTO przychody (ID_uzytkownika, kwota, data, kategoria_przypisana_do_danego_uzytkownika) VALUES ('$ID_uzytkownika', '$kwota', '$data', '$id_kategorii')"))
+					{
+						;						
+					}
+					else
+					{
+						throw new Exception($polaczenie->error);
+					}						
+				}
+				
+				$polaczenie->close();				
+			}
+			
+		}
+		catch(Exception $e)
+		{
+			echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o rejestrację w innym terminie!</span>';
+			echo '<br />Informacja developerska: '.$e;
+		}				
+		
+	}
+
 ?>
 
 <!DOCTYPE HTML>
@@ -74,7 +141,7 @@
 	<main>	
 		<div class="row">
 			<div class="col-auto">
-				<p class="greetings p-2"><?php echo "Witaj ".$_SESSION['imie']."!";?></p>
+				<p class="greetings p-2">Dodano nowy przychód!</p>
 			</div>		
 		</div>	
 	</main>
