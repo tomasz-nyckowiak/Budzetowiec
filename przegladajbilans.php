@@ -51,19 +51,19 @@
 			
 				<ol class="navbar-nav text-sm-center mx-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="dodajprzychod.html"> Dodaj przychód </a>
+						<a class="nav-link" href="dodajprzychod.php"> Dodaj przychód </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="dodajwydatek.html"> Dodaj wydatek </a>
+						<a class="nav-link" href="dodajwydatek.php"> Dodaj wydatek </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link onSite" href="przegladajbilans.html"> Przeglądaj bilans </a>
+						<a class="nav-link onSite" href="przegladajbilans.php"> Przeglądaj bilans </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="ustawienia.html"> Ustawienia </a>
+						<a class="nav-link" href="ustawienia.php"> Ustawienia </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="index.html"> Wyloguj </a>
+						<a class="nav-link" href="logout.php"> Wyloguj </a>
 					</li>
 				</ol>
 			

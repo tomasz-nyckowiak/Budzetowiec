@@ -8,6 +8,42 @@
 		exit();
 	}
 	
+	require_once "connect.php";
+	mysqli_report(MYSQLI_REPORT_STRICT);
+	
+	try
+	{
+		$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+		
+		if ($polaczenie->connect_errno!=0)
+		{
+			throw new Exception(mysqli_connect_errno());
+		}
+		else
+		{			
+			$moje_kategorie = $polaczenie->query("SELECT kategoria FROM wydatki_kategorie_przypisane_do_uzytkownika");
+			$tablica = array();
+			while ($row = $moje_kategorie->fetch_assoc()) {
+			$temp = $row['kategoria'];				
+			array_push($tablica, "$temp");
+			}
+			
+			$platnosci = $polaczenie->query("SELECT platnosc FROM sposoby_platnosci_przypisane_do_uzytkownika");
+			$tablica2 = array();
+			while ($wiersz = $platnosci->fetch_assoc()) {
+			$temp2 = $wiersz['platnosc'];				
+			array_push($tablica2, "$temp2");
+			}
+			
+			$polaczenie->close();
+		}
+	}
+	catch(Exception $e)
+	{
+		echo '<span style="color:red;">Błąd serwera! Przepraszamy za niedogodności i prosimy o wizytę w innym terminie!</span>';
+		echo '<br />Informacja developerska: '.$e;
+	}
+	
 ?>
 
 <!DOCTYPE HTML>
@@ -49,19 +85,19 @@
 			
 				<ol class="navbar-nav text-sm-center mx-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="dodajprzychod.html"> Dodaj przychód </a>
+						<a class="nav-link" href="dodajprzychod.php"> Dodaj przychód </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link onSite" href="dodajwydatek.html"> Dodaj wydatek </a>
+						<a class="nav-link onSite" href="dodajwydatek.php"> Dodaj wydatek </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="przegladajbilans.html"> Przeglądaj bilans </a>
+						<a class="nav-link" href="przegladajbilans.php"> Przeglądaj bilans </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="ustawienia.html"> Ustawienia </a>
+						<a class="nav-link" href="ustawienia.php"> Ustawienia </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="index.html"> Wyloguj </a>
+						<a class="nav-link" href="logout.php"> Wyloguj </a>
 					</li>
 				</ol>
 			
@@ -77,7 +113,7 @@
 
 			<div class="row mt-5 form">				
 					
-				<form>
+				<form action="dodanonowywydatek.php" method="post">
 					
 					<div class="row my-1 p-2">
 					
@@ -86,7 +122,7 @@
 						</div>
 					
 						<div class="col-auto">
-							<input type="number" id="inputAmount" class="form-control" required>
+							<input type="number" step="0.01" name="kwotaWydatku" id="inputAmount" class="form-control" required>
 						</div>
 					
 					</div>
@@ -98,7 +134,7 @@
 						</div>
 					
 						<div class="col-auto">
-							<input type="date" id="inputDate" class="form-control" required>
+							<input type="date" name="dataWydatku" value="<?php echo date('Y-m-d');?>" id="inputDate" class="form-control" required>
 						</div>
 					
 					</div>
@@ -106,15 +142,16 @@
 					<div class="row my-1 p-2">
 
 						<div class="col-auto">
-							
-							<select class="form-select" aria-label="Sposób płatności">
-							  <option selected>Sposób płatności</option>
-							  <option value="g">gotówka</option>
-							  <option value="d">karta debetowa</option>
-							  <option value="k">karta kredytowa</option>
-							</select>
-							
-						</div>
+							<label for="payments" class="col-form-label">Sposób płatności:</label>
+						</div>							
+						
+						<div class="col-auto">
+							<select class="form-select" id="payments" name="sposobyPlatnosci" aria-label="Sposób płatności">
+								<option name="paymentOptions" value="<?php echo "$tablica2[0]";?>"><?php echo "$tablica2[0]";?></option>
+								<option name="paymentOptions" value="<?php echo "$tablica2[1]";?>"><?php echo "$tablica2[1]";?></option>
+								<option name="paymentOptions" value="<?php echo "$tablica2[2]";?>"><?php echo "$tablica2[2]";?></option>
+							</select>							
+						</div>						
 					
 					</div>
 
@@ -125,72 +162,72 @@
 						<div class="col-auto">
 						
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-							  <label class="form-check-label" for="inlineRadio1">Jedzenie</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="<?php echo "$tablica[0]";?>">
+							  <label class="form-check-label" for="inlineRadio1"><?php echo "$tablica[0]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-							  <label class="form-check-label" for="inlineRadio2">Mieszkanie</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="<?php echo "$tablica[1]";?>">
+							  <label class="form-check-label" for="inlineRadio2"><?php echo "$tablica[1]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-							  <label class="form-check-label" for="inlineRadio3">Transport</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="<?php echo "$tablica[2]";?>">
+							  <label class="form-check-label" for="inlineRadio3"><?php echo "$tablica[2]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
-							  <label class="form-check-label" for="inlineRadio4">Telekomunikacja</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="<?php echo "$tablica[3]";?>">
+							  <label class="form-check-label" for="inlineRadio4"><?php echo "$tablica[3]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option5">
-							  <label class="form-check-label" for="inlineRadio5">Opieka zdrowotna</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="<?php echo "$tablica[4]";?>">
+							  <label class="form-check-label" for="inlineRadio5"><?php echo "$tablica[4]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="option6">
-							  <label class="form-check-label" for="inlineRadio6">Ubranie</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="<?php echo "$tablica[5]";?>">
+							  <label class="form-check-label" for="inlineRadio6"><?php echo "$tablica[5]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio7" value="option7">
-							  <label class="form-check-label" for="inlineRadio7">Higiena</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio7" value="<?php echo "$tablica[6]";?>">
+							  <label class="form-check-label" for="inlineRadio7"><?php echo "$tablica[6]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio8" value="option8">
-							  <label class="form-check-label" for="inlineRadio8">Dzieci</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio8" value="<?php echo "$tablica[7]";?>">
+							  <label class="form-check-label" for="inlineRadio8"><?php echo "$tablica[7]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio9" value="option9">
-							  <label class="form-check-label" for="inlineRadio9">Rozrywka</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio9" value="<?php echo "$tablica[8]";?>">
+							  <label class="form-check-label" for="inlineRadio9"><?php echo "$tablica[8]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio10" value="option10">
-							  <label class="form-check-label" for="inlineRadio10">Wycieczka</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio10" value="<?php echo "$tablica[9]";?>">
+							  <label class="form-check-label" for="inlineRadio10"><?php echo "$tablica[9]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio11" value="option11">
-							  <label class="form-check-label" for="inlineRadio11">Szkolenia</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio11" value="<?php echo "$tablica[10]";?>">
+							  <label class="form-check-label" for="inlineRadio11"><?php echo "$tablica[10]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio12" value="option12">
-							  <label class="form-check-label" for="inlineRadio12">Książki</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio12" value="<?php echo "$tablica[11]";?>">
+							  <label class="form-check-label" for="inlineRadio12"><?php echo "$tablica[11]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio13" value="option13">
-							  <label class="form-check-label" for="inlineRadio13">Oszczędności</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio13" value="<?php echo "$tablica[12]";?>">
+							  <label class="form-check-label" for="inlineRadio13"><?php echo "$tablica[12]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio14" value="option14">
-							  <label class="form-check-label" for="inlineRadio14">Na emeryturę</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio14" value="<?php echo "$tablica[13]";?>">
+							  <label class="form-check-label" for="inlineRadio14"><?php echo "$tablica[13]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio15" value="option15">
-							  <label class="form-check-label" for="inlineRadio15"> Spłata długów</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio15" value="<?php echo "$tablica[14]";?>">
+							  <label class="form-check-label" for="inlineRadio15"><?php echo "$tablica[14]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio16" value="option16">
-							  <label class="form-check-label" for="inlineRadio16">Darowizna</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio16" value="<?php echo "$tablica[15]";?>">
+							  <label class="form-check-label" for="inlineRadio16"><?php echo "$tablica[15]";?></label>
 							</div>
 							<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio17" value="option17">
-							  <label class="form-check-label" for="inlineRadio17">Inne wydatki</label>
+							  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio17" value="<?php echo "$tablica[16]";?>">
+							  <label class="form-check-label" for="inlineRadio17"><?php echo "$tablica[16]";?></label>
 							</div>						
 							
 						</div>					
@@ -200,7 +237,7 @@
 					<div class="row my-1 p-2">				
 						<div class="col-auto">						
 							<label for="CommentForExpense" class="col-form-label">Komentarz (opcjonalnie):</label>
-							<textarea class="form-control" id="CommentForExpense" rows="3" cols="60" minlength="10"></textarea>
+							<textarea class="form-control" name="komentarzDoWydatku" id="CommentForExpense" rows="3" cols="60" minlength="10"></textarea>
 						</div>				
 					</div>				
 					

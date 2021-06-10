@@ -104,19 +104,41 @@
 					{
 						$_SESSION['udanarejestracja'] = true;
 						
-						//Po udanej rejestracji kopiujemy domyślne kategorie z tabeli przychody_kategorie_domyslne do tabeli przychody_kategorie_przypisane_do_uzytkownika
-						
 						//Pobieramy ID zalogowanego użytkownika
 						$ID_uzytkownika = $polaczenie->query("SELECT id FROM uzytkownicy ORDER BY id DESC LIMIT 1")->fetch_object()->id;
 						
+						/*Po udanej rejestracji kopiujemy odpowiednie rekordy:
+						- przychody_kategorie_domyslne do tabeli przychody_kategorie_przypisane_do_uzytkownika
+						- wydatki_kategorie_domyslne do tabeli wydatki_kategorie_przypisane_do_uzytkownika
+						- sposoby_platnosci_domyslne do tabeli sposoby_platnosci_przypisane_do_uzytkownika						
+						*/
+						
 						if ($polaczenie->query("INSERT INTO przychody_kategorie_przypisane_do_uzytkownika (ID_uzytkownika, kategoria) SELECT uzytkownicy.id, przychody_kategorie_domyslne.kategoria FROM uzytkownicy, przychody_kategorie_domyslne WHERE uzytkownicy.id = '$ID_uzytkownika'"))
+						{
+							;								
+						}
+						else
+						{
+							throw new Exception($polaczenie->error);
+						}
+						
+						if ($polaczenie->query("INSERT INTO wydatki_kategorie_przypisane_do_uzytkownika (ID_uzytkownika, kategoria) SELECT uzytkownicy.id, wydatki_kategorie_domyslne.kategoria FROM uzytkownicy, wydatki_kategorie_domyslne WHERE uzytkownicy.id = '$ID_uzytkownika'"))
+						{
+							;								
+						}
+						else
+						{
+							throw new Exception($polaczenie->error);
+						}
+						
+						if ($polaczenie->query("INSERT INTO sposoby_platnosci_przypisane_do_uzytkownika (ID_uzytkownika, platnosc) SELECT uzytkownicy.id, sposoby_platnosci_domyslne.platnosc FROM uzytkownicy, sposoby_platnosci_domyslne WHERE uzytkownicy.id = '$ID_uzytkownika'"))
 						{
 							header('Location: witamy.php');								
 						}
 						else
 						{
 							throw new Exception($polaczenie->error);
-						}						
+						}
 					}
 					else
 					{
