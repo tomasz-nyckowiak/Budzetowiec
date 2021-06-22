@@ -23,12 +23,15 @@
 		{			
 			$ID_uzytkownika = $_SESSION['id'];
 			
-			//Ustawiamy odpowiedni okres czasu (bieżący miesiąc)
-			$aktualna_data = date('Y-m');
+			//Ustawiamy odpowiedni okres czasu (poprzedni miesiąc)
+			$aktualna_data = date('Y-m-d');
 			$rok = date('Y');
-			$miesiac = date('m');			
-			$liczba_dni = cal_days_in_month(CAL_GREGORIAN, "$miesiac", "$rok");
-			$biezacy_miesiac = "Okres od $aktualna_data-01 do $aktualna_data-$liczba_dni";
+			$poprzedni_miesiac = date_create("$aktualna_data");
+			date_modify($poprzedni_miesiac,"-1 month");
+			$wlasciwy_miesiac =  date_format($poprzedni_miesiac, "m");
+			$wlasciwa_data =  date_format($poprzedni_miesiac, "Y-m");
+			$number = cal_days_in_month(CAL_GREGORIAN, "$wlasciwy_miesiac", "$rok");	
+			$poprzedni = "Od $rok-$wlasciwy_miesiac-01 do $rok-$wlasciwy_miesiac-$number";
 			
 			$suma_calkowita_przychodow = 0;
 			$suma_calkowita_wydatkow = 0;
@@ -61,8 +64,8 @@
 			array_push($istniejace_numery_id_kategorii, "$temp2_id");
 			}
 
-			//Wyliczamy sumy kwot dla wszystkich kategorii (przychodów) dla bieżącego miesiąca oraz sumy całkowitej przychodów i wstawiamy do tablicy
-			$sumy_przychodow = $polaczenie->query("SELECT kategoria_przypisana_do_danego_uzytkownika, SUM(kwota) AS suma FROM przychody WHERE data LIKE '$aktualna_data%' AND ID_uzytkownika = '$ID_uzytkownika' GROUP BY kategoria_przypisana_do_danego_uzytkownika");
+			//Wyliczamy sumy kwot dla wszystkich kategorii (przychodów) dla poprzedniego miesiąca oraz sumy całkowitej przychodów i wstawiamy do tablicy
+			$sumy_przychodow = $polaczenie->query("SELECT kategoria_przypisana_do_danego_uzytkownika, SUM(kwota) AS suma FROM przychody WHERE data LIKE '$wlasciwa_data%' AND ID_uzytkownika = '$ID_uzytkownika' GROUP BY kategoria_przypisana_do_danego_uzytkownika");
 			$tablica_sum_przychodow = array();
 			while ($row_sum_przychody = $sumy_przychodow->fetch_assoc()) {				
 			$temp_sumy_przychodow = $row_sum_przychody['suma'];
@@ -112,8 +115,8 @@
 			array_push($istniejace_numery_id_kategorii_wydatkow, "$temp2_id_wydatki");
 			}
 			
-			//Wyliczamy sumy kwot dla wszystkich kategorii (wydatków) dla bieżącego miesiąca oraz sumy całkowitej wydatków i wstawiamy do tablicy
-			$sumy_wydatkow = $polaczenie->query("SELECT kategoria_przypisana_do_danego_uzytkownika, SUM(kwota) AS suma FROM wydatki WHERE data LIKE '$aktualna_data%' AND ID_uzytkownika = '$ID_uzytkownika' GROUP BY kategoria_przypisana_do_danego_uzytkownika");
+			//Wyliczamy sumy kwot dla wszystkich kategorii (wydatków) dla poprzedniego miesiąca oraz sumy całkowitej wydatków i wstawiamy do tablicy
+			$sumy_wydatkow = $polaczenie->query("SELECT kategoria_przypisana_do_danego_uzytkownika, SUM(kwota) AS suma FROM wydatki WHERE data LIKE '$wlasciwa_data%' AND ID_uzytkownika = '$ID_uzytkownika' GROUP BY kategoria_przypisana_do_danego_uzytkownika");
 			$tablica_sum_wydatkow = array();
 			while ($row_sum_wydatki = $sumy_wydatkow->fetch_assoc()) {				
 			$temp_sumy_wydatkow = $row_sum_wydatki['suma'];
@@ -173,7 +176,7 @@
 	foreach ($expenses as $chartPie)
 	{					
 		array_push($expensesOnChart, array("label"=>$chartPie['category'], "y"=>$chartPie['amount']));		
-	}	
+	}
 
 ?>
 
@@ -359,9 +362,9 @@
 			<!-- End of modal -->
 
 			<div class="d-flex justify-content-center">			
-				<div class="col-sm-6">				
-					<p style="text-align: center; background-image: url('img/what-the-hex-dark.png');">Wybrano bieżący miesiąc:</br>
-					(<?php echo "$biezacy_miesiac";?>)</p>			
+				<div class="col-sm-6">					
+					<p style="text-align: center; background-image: url('img/what-the-hex-dark.png');">Wybrano poprzedni miesiąc:</br>
+					(<?php echo "$poprzedni";?>)</p>
 				</div>			
 			</div>
 
@@ -452,7 +455,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
 	
 	<script src="js/bootstrap.min.js"></script>
-	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	
 </body>
 </html>

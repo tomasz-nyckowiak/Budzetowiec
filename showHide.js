@@ -94,3 +94,22 @@ function resetFunction()
 {
 	document.getElementById("modalForm").reset();
 }
+
+function testResults()
+{
+    var data1 = document.getElementById("date1").value;
+	//window.location.href = "przegladajbilans4.php";
+	//if (Date.parse("data1")) document.getElementById("wynik").innerHTML="To jest prawidłowa data!";
+	//else document.getElementById("wynik").innerHTML="To nie jest prawidłowa data!";
+    //document.write(TestVar);
+	//alert ("You typed: " + TestVar);
+}
+
+// parse a date in yyyy-mm-dd format
+function parseDate(input) {
+
+  let parts = input.split('-');
+
+  // new Date(year, month [, day [, hours[, minutes[, seconds[, ms]]]]])
+  return new Date(parts[0], parts[1]-1, parts[2]); // Note: months are 0-based
+}

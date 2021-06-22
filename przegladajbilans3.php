@@ -23,12 +23,9 @@
 		{			
 			$ID_uzytkownika = $_SESSION['id'];
 			
-			//Ustawiamy odpowiedni okres czasu (bieżący miesiąc)
-			$aktualna_data = date('Y-m');
-			$rok = date('Y');
-			$miesiac = date('m');			
-			$liczba_dni = cal_days_in_month(CAL_GREGORIAN, "$miesiac", "$rok");
-			$biezacy_miesiac = "Okres od $aktualna_data-01 do $aktualna_data-$liczba_dni";
+			//Ustawiamy odpowiedni okres czasu (bieżący rok)
+			$aktualny_rok = date('Y');
+			$biezacy_rok = "Od $aktualny_rok-01-01 do $aktualny_rok-12-31";
 			
 			$suma_calkowita_przychodow = 0;
 			$suma_calkowita_wydatkow = 0;
@@ -62,7 +59,7 @@
 			}
 
 			//Wyliczamy sumy kwot dla wszystkich kategorii (przychodów) dla bieżącego miesiąca oraz sumy całkowitej przychodów i wstawiamy do tablicy
-			$sumy_przychodow = $polaczenie->query("SELECT kategoria_przypisana_do_danego_uzytkownika, SUM(kwota) AS suma FROM przychody WHERE data LIKE '$aktualna_data%' AND ID_uzytkownika = '$ID_uzytkownika' GROUP BY kategoria_przypisana_do_danego_uzytkownika");
+			$sumy_przychodow = $polaczenie->query("SELECT kategoria_przypisana_do_danego_uzytkownika, SUM(kwota) AS suma FROM przychody WHERE data LIKE '$aktualny_rok%' AND ID_uzytkownika = '$ID_uzytkownika' GROUP BY kategoria_przypisana_do_danego_uzytkownika");
 			$tablica_sum_przychodow = array();
 			while ($row_sum_przychody = $sumy_przychodow->fetch_assoc()) {				
 			$temp_sumy_przychodow = $row_sum_przychody['suma'];
@@ -113,7 +110,7 @@
 			}
 			
 			//Wyliczamy sumy kwot dla wszystkich kategorii (wydatków) dla bieżącego miesiąca oraz sumy całkowitej wydatków i wstawiamy do tablicy
-			$sumy_wydatkow = $polaczenie->query("SELECT kategoria_przypisana_do_danego_uzytkownika, SUM(kwota) AS suma FROM wydatki WHERE data LIKE '$aktualna_data%' AND ID_uzytkownika = '$ID_uzytkownika' GROUP BY kategoria_przypisana_do_danego_uzytkownika");
+			$sumy_wydatkow = $polaczenie->query("SELECT kategoria_przypisana_do_danego_uzytkownika, SUM(kwota) AS suma FROM wydatki WHERE data LIKE '$aktualny_rok%' AND ID_uzytkownika = '$ID_uzytkownika' GROUP BY kategoria_przypisana_do_danego_uzytkownika");
 			$tablica_sum_wydatkow = array();
 			while ($row_sum_wydatki = $sumy_wydatkow->fetch_assoc()) {				
 			$temp_sumy_wydatkow = $row_sum_wydatki['suma'];
@@ -173,7 +170,7 @@
 	foreach ($expenses as $chartPie)
 	{					
 		array_push($expensesOnChart, array("label"=>$chartPie['category'], "y"=>$chartPie['amount']));		
-	}	
+	}
 
 ?>
 
@@ -359,9 +356,9 @@
 			<!-- End of modal -->
 
 			<div class="d-flex justify-content-center">			
-				<div class="col-sm-6">				
-					<p style="text-align: center; background-image: url('img/what-the-hex-dark.png');">Wybrano bieżący miesiąc:</br>
-					(<?php echo "$biezacy_miesiac";?>)</p>			
+				<div class="col-sm-6">					
+					<p style="text-align: center; background-image: url('img/what-the-hex-dark.png');">Wybrano bieżący rok:</br>
+					(<?php echo "$biezacy_rok";?>)</p>
 				</div>			
 			</div>
 
@@ -452,7 +449,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
 	
 	<script src="js/bootstrap.min.js"></script>
-	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	
 </body>
 </html>

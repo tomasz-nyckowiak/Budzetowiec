@@ -232,15 +232,12 @@ input[type=submit]:hover
 	background-color: #2E8B57;
 }
 
-#currentMonth,
-#previousMonth,
-#currentYear,
-#customizedRange
+/*.timespan
 {
 	text-align: center;	
 	display: none;
 	background-image: url("img/what-the-hex-dark.png");
-}
+}*/
 
 input[name="date1"],
 input[name="date2"]
@@ -278,7 +275,7 @@ h2
 	border-top: 1px solid #FFD700;
 	border-bottom: 1px solid #FFD700;
 	margin-left: 25px;
-	background-image: url("img/what-the-hex-dark.png");
+	background-image: url("img/what-the-hex-dark.png");	
 }
 
 ul > li:last-child
@@ -297,7 +294,7 @@ ul > li:last-child
 	float: left;
 	width: 300px;
 	height: 300px;
-	margin-top: 50px;
+	margin-top: 50px;	
 }
 
 .balance
@@ -306,7 +303,7 @@ ul > li:last-child
 	border-right: 2px solid #FFD700;
 	border-top: 2px solid #FFD700;
 	border-bottom: 2px solid #FFD700;
-	background-image: url("img/what-the-hex-dark.png");
+	background-image: url("img/what-the-hex-dark.png");	
 }
 
 					/*STOPKA*/

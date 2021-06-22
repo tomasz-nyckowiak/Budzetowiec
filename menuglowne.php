@@ -55,7 +55,7 @@
 						<a class="nav-link" href="dodajwydatek.php"> Dodaj wydatek </a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="przegladajbilans.php"> Przeglądaj bilans </a>
+						<a class="nav-link" href="przegladajbilanswybor.php"> Przeglądaj bilans </a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="ustawienia.php"> Ustawienia </a>

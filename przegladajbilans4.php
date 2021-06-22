@@ -8,6 +8,11 @@
 		exit();
 	}
 	
+	//$firstDate = $_POST['date1'];
+	//$_SESSION['f_data'] = $firstDate;
+	//$result = $_POST['date1'];
+	//echo $_SESSION['fr_data1'];
+	
 	require_once "connect.php";
 	mysqli_report(MYSQLI_REPORT_STRICT);
 	
@@ -23,12 +28,9 @@
 		{			
 			$ID_uzytkownika = $_SESSION['id'];
 			
-			//Ustawiamy odpowiedni okres czasu (bieżący miesiąc)
-			$aktualna_data = date('Y-m');
-			$rok = date('Y');
-			$miesiac = date('m');			
-			$liczba_dni = cal_days_in_month(CAL_GREGORIAN, "$miesiac", "$rok");
-			$biezacy_miesiac = "Okres od $aktualna_data-01 do $aktualna_data-$liczba_dni";
+			//Ustawiamy odpowiedni okres czasu (niestandardowy)
+			$aktualna_data = date('Y-m-d');
+			$niestandardowyZakres = "Zakres od rrrr-mm-dd do rrrr-mm-dd";
 			
 			$suma_calkowita_przychodow = 0;
 			$suma_calkowita_wydatkow = 0;
@@ -173,7 +175,7 @@
 	foreach ($expenses as $chartPie)
 	{					
 		array_push($expensesOnChart, array("label"=>$chartPie['category'], "y"=>$chartPie['amount']));		
-	}	
+	}
 
 ?>
 
@@ -329,7 +331,7 @@
 				  </div>
 				  <div class="modal-body">
 					
-					<form id="modalForm">
+					<form id="modalForm" method="post">
 					  						
 						<div class="row d-flex justify-content-center align-items-center">								
 							<div class="col-auto">
@@ -351,17 +353,21 @@
 				  </div>
 				  <div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="resetFunction()">Zamknij</button>
-					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="resetFunction(); location.href='przegladajbilans4.php';">Zatwierdź</button>
+					<button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="resetFunction(); showC();">Zatwierdź</button>
 				  </div>
 				</div>
 			  </div>
 			</div>
 			<!-- End of modal -->
+			
+			<script>
+				var name = $('#date1').val();
+			</script>
 
 			<div class="d-flex justify-content-center">			
-				<div class="col-sm-6">				
-					<p style="text-align: center; background-image: url('img/what-the-hex-dark.png');">Wybrano bieżący miesiąc:</br>
-					(<?php echo "$biezacy_miesiac";?>)</p>			
+				<div class="col-sm-6">					
+					<p style="text-align: center; background-image: url('img/what-the-hex-dark.png');">Wybrano niestandardowy okres:</br>
+					(<?php echo "$niestandardowyZakres";?>)</p>
 				</div>			
 			</div>
 
@@ -452,7 +458,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
 	
 	<script src="js/bootstrap.min.js"></script>
-	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	
 </body>
 </html>
