@@ -13,57 +13,56 @@
 	
 	try
 	{
-		$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+		$conn = new mysqli($host, $db_user, $db_password, $db_name);
 		
-		if ($polaczenie->connect_errno!=0)
+		if ($conn->connect_errno!=0)
 		{
 			throw new Exception(mysqli_connect_errno());
 		}
 		else
 		{	
 			$login = $_POST['login'];
-			$haslo = $_POST['haslo'];
+			$pass = $_POST['haslo'];
 			
 			$login = htmlentities($login, ENT_QUOTES, "UTF-8");		
 		
-			if ($rezultat = $polaczenie->query(
+			if ($result = $conn->query(
 			sprintf("SELECT * FROM uzytkownicy WHERE email='%s'",
-			mysqli_real_escape_string($polaczenie,$login))))
+			mysqli_real_escape_string($conn,$login))))
 			{
-				$ilu_userow = $rezultat->num_rows;
-				if ($ilu_userow>0)
+				$how_many_users = $result->num_rows;
+				if ($how_many_users > 0)
 				{
-					$wiersz = $rezultat->fetch_assoc();
+					$row = $result->fetch_assoc();
 					
-					if (password_verify($haslo, $wiersz['haslo']))
+					if (password_verify($pass, $row['haslo']))
 					{					
-						$_SESSION['zalogowany'] = true;					
-						$_SESSION['id'] = $wiersz['id'];
-						$_SESSION['imie'] = $wiersz['imie'];				
-						$_SESSION['email'] = $wiersz['email'];				
+						$_SESSION['logged_in'] = true;					
+						$_SESSION['id'] = $row['id'];
+						$_SESSION['imie'] = $row['imie'];				
+						$_SESSION['email'] = $row['email'];
 						
-						unset($_SESSION['blad']);
-						$rezultat->free_result();
+						$_SESSION['first_time'] = true;
+						
+						unset($_SESSION['error']);
+						$result->free_result();
 						header('Location: menuglowne.php');				
 					}
 					else
 					{					
-						$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';						
+						$_SESSION['error'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';						
 						header('Location: logowanie.php');
-					}
-					
-				} else {
-					
-					$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';
+					}					
+				}
+				else
+				{					
+					$_SESSION['error'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';
 					header('Location: logowanie.php');
 				}
 			}
-			else
-			{
-				throw new Exception($polaczenie->error);
-			}
+			else	throw new Exception($conn->error);			
 			
-			$polaczenie->close();
+			$conn->close();
 		}
 	}
 	catch(Exception $e)
