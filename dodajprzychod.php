@@ -1,6 +1,7 @@
 <?php
-
+	
 	session_start();
+	header('Content-type: text/html; charset=utf-8');
 	
 	if (!isset($_SESSION['logged_in']))
 	{
@@ -14,6 +15,7 @@
 	try
 	{
 		$conn = new mysqli($host, $db_user, $db_password, $db_name);
+		mysqli_set_charset($conn, "utf8");
 		
 		if ($conn->connect_errno!=0)
 		{
@@ -51,7 +53,8 @@
 	<meta name="description" content="Moja pierwsza aplikacja internetowa">
 	<meta name="keywords" content="prowadzenie budżetu, domowy budżet, budżet, jak oszczędzać, oszczędzanie, finanse, kontrola wydatków, przychody, wydatki, bilans, bilans finansowy">
 	<meta name="author" content="Tomasz Nyćkowiak">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">	
+	<!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/fontello.css" type="text/css">

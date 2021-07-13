@@ -38,6 +38,7 @@
 	try
 	{
 		$conn = new mysqli($host, $db_user, $db_password, $db_name);
+		mysqli_set_charset($conn, "utf8");
 		
 		if ($conn->connect_errno!=0)
 		{
@@ -91,6 +92,8 @@
 			
 			$incomes_total_amount = 0;
 			$expenses_total_amount = 0;
+			$no_incomes = false;
+			$no_expenses = false;
 			
 			//Przychody / INCOMES
 			$i = 0;
@@ -414,11 +417,31 @@
 					<h2 class="h2 my-3"><span style="color: green">Przychody</span></h2>					
 					<div class="d-flex justify-content-center">
 						<ul class="list-unstyled p-1 float-left">
-							<li><?php echo "$incomes_categories[0]";?> : <span><?php echo "$tab_incomes[0]";?></span></li>
-							<li><?php echo "$incomes_categories[1]";?> : <span><?php echo "$tab_incomes[1]";?></span></li>
-							<li><?php echo "$incomes_categories[2]";?> : <span><?php echo "$tab_incomes[2]";?></span></li>
-							<li><?php echo "$incomes_categories[3]";?> : <span><?php echo "$tab_incomes[3]";?></span></li>
-							<li>Suma : <span><?php echo "$incomes_total_amount";?></span></li>
+							<?php								
+								for ($x = 0; $x < $tab_size_incomes; $x++)
+								{
+									if ($tab_incomes[$x] != 0)
+									{
+										echo '<li>';
+										echo "$incomes_categories[$x] : $tab_incomes[$x]";										
+										echo '</li>';										
+									}									
+								}
+								
+								if ($incomes_total_amount == 0)
+								{
+									$no_incomes = true;
+									echo '<li>';
+									echo "Brak przychodów!";
+									echo '</li>';
+								}
+								else
+								{
+									echo '<li>';
+									echo "Suma : $incomes_total_amount";										
+									echo '</li>';
+								}								
+							?>							
 						</ul>
 					</div>				
 				</div>				
@@ -427,24 +450,31 @@
 					<h2 class="h2 my-3"><span style="color: #e60000">Wydatki</span></h2>					
 					<div class="d-flex justify-content-center">
 						<ul class="list-unstyled p-1 float-left">							
-							<li><?php echo "$expenses_categories[0]";?> : <span><?php echo "$tab_expenses[0]";?></span></li>
-							<li><?php echo "$expenses_categories[1]";?> : <span><?php echo "$tab_expenses[1]";?></span></li>
-							<li><?php echo "$expenses_categories[2]";?> : <span><?php echo "$tab_expenses[2]";?></span></li>
-							<li><?php echo "$expenses_categories[3]";?> : <span><?php echo "$tab_expenses[3]";?></span></li>
-							<li><?php echo "$expenses_categories[4]";?> : <span><?php echo "$tab_expenses[4]";?></span></li>
-							<li><?php echo "$expenses_categories[5]";?> : <span><?php echo "$tab_expenses[5]";?></span></li>
-							<li><?php echo "$expenses_categories[6]";?> : <span><?php echo "$tab_expenses[6]";?></span></li>
-							<li><?php echo "$expenses_categories[7]";?> : <span><?php echo "$tab_expenses[7]";?></span></li>
-							<li><?php echo "$expenses_categories[8]";?> : <span><?php echo "$tab_expenses[8]";?></span></li>
-							<li><?php echo "$expenses_categories[9]";?> : <span><?php echo "$tab_expenses[9]";?></span></li>
-							<li><?php echo "$expenses_categories[10]";?> : <span><?php echo "$tab_expenses[10]";?></span></li>
-							<li><?php echo "$expenses_categories[11]";?> : <span><?php echo "$tab_expenses[11]";?></span></li>
-							<li><?php echo "$expenses_categories[12]";?> : <span><?php echo "$tab_expenses[12]";?></span></li>
-							<li><?php echo "$expenses_categories[13]";?> : <span><?php echo "$tab_expenses[13]";?></span></li>
-							<li><?php echo "$expenses_categories[14]";?> : <span><?php echo "$tab_expenses[14]";?></span></li>
-							<li><?php echo "$expenses_categories[15]";?> : <span><?php echo "$tab_expenses[15]";?></span></li>
-							<li><?php echo "$expenses_categories[16]";?> : <span><?php echo "$tab_expenses[16]";?></span></li>
-							<li>Suma : <span><?php echo "$expenses_total_amount";?></span></li>						
+							<?php
+								for ($x = 0; $x < $tab_size_expenses; $x++)
+								{
+									if ($tab_expenses[$x] != 0)
+									{
+										echo '<li>';
+										echo "$expenses_categories[$x] : $tab_expenses[$x]";										
+										echo '</li>';										
+									}									
+								}
+								
+								if ($expenses_total_amount == 0)
+								{
+									$no_expenses = true;
+									echo '<li>';
+									echo "Brak wydatków!";
+									echo '</li>';
+								}
+								else
+								{
+									echo '<li>';
+									echo "Suma : $expenses_total_amount";										
+									echo '</li>';
+								}								
+							?>						
 						</ul>
 					</div>				
 				</div>
@@ -458,8 +488,15 @@
 				<div class="col-auto balance p-1 text-center">				
 					<h2 class="h2 my-3"><span style="color: #FFD700">Bilans końcowy</span></h2>					
 					<div class="summary">									
-						<p><?php echo "$balance_sheet";?></p>
-						<p><?php echo "$final_message";?></p>								
+						<p>
+						<?php
+							if (($no_incomes == true) && ($no_expenses == true))
+							{
+								echo "Brak przychodów i wydatków!";
+							}
+							else echo nl2br("$balance_sheet\n$final_message");							
+						?>
+						</p>														
 					</div>					
 				</div>			
 			</div>			

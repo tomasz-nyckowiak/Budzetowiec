@@ -1,8 +1,8 @@
 <?php
 
 	$host = "localhost";
-	$db_user = "root";
-	$db_password = "";
-	$db_name = "budzetowiec";
+	$db_user = "tomaszny_HomeBudgetAdmin";
+	$db_password = "K0miksyS0mTHEb3st";
+	$db_name = "tomaszny_homebudget";
 
 ?>

@@ -14,6 +14,7 @@
 	try
 	{
 		$conn = new mysqli($host, $db_user, $db_password, $db_name);
+		mysqli_set_charset($conn, "utf8");
 		
 		if ($conn->connect_errno!=0)
 		{
